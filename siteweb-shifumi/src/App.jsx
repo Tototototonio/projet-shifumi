@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import RegisterPage from './pages/RegisterPage';
 import Header from './components/Header';
+import MatchPage from './pages/MatchPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/HomePage" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/match/:matchId" element={<MatchPage />} />
         </Routes>
       </div>
     </Router>

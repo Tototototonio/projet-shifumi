@@ -51,8 +51,8 @@ const HomePage = () => {
         throw new Error('Failed to create match');
       }
 
-      const newMatch = await response.json();
-      setMatches([newMatch]); 
+      const updatedMatch = await response.json();
+      setMatches([updatedMatch]);
     } catch (error) {
       console.error('Error creating match:', error);
     }
