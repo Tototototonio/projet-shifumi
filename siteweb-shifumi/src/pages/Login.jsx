@@ -1,0 +1,90 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = async () => {
+        try {
+            const response = await fetch('http://fauques.freeboxos.fr:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+
+            const responseData = await response.json();
+            localStorage.setItem('token', responseData.token);
+            navigate('/HomePage');
+        } catch (error) {
+            console.error('Error during login:', error.message);
+        }
+    };
+
+    return (
+        <div
+            style={{
+                maxWidth: '500px',
+                margin: 'auto',
+                padding: '20px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                background: '#f5f5f5',
+            }}
+        >
+            <h1>Login</h1>
+            <form style={{ marginTop: '10px' }}>
+                <label>
+                    Username:
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        style={{
+                            width: '100%',
+                            padding: '10px',
+                            margin: '10px 0',
+                            border: '1px solid grey',
+                        }}
+                    />
+                </label>
+                <br />
+                <label>
+                    Password:
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{
+                            width: '100%',
+                            padding: '10px',
+                            margin: '10px 0',
+                            border: '1px solid grey',
+                        }}
+                    />
+                </label>
+                <br />
+                <button
+                    type="button"
+                    onClick={handleLogin}
+                    style={{
+                        backgroundColor: 'Black',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '4px',
+                    }}
+                >
+                    Login
+                </button>
+            </form>
+        </div>
+    );
+};
+
+export default Login;
